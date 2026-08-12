@@ -16,10 +16,10 @@ export default function Home() {
 
         <div className="mx-auto w-full max-w-5xl px-6 pt-16 pb-20 text-center sm:px-10 sm:pt-24">
           <h1 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
-            Simple tools for everyday tasks
+            One click. Every conversion you&apos;ll ever need.
           </h1>
           <p className="mt-3 text-lg text-gray-500">
-            One click. Every conversion you&apos;ll ever need.
+            Fast, no-fuss converters. No sign-up, no clutter.
           </p>
         </div>
 
