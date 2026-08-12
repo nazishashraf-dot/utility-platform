@@ -2,16 +2,7 @@
 
 import { useId, useMemo, useState } from "react";
 import { convert } from "@/features/converters/engine/convert";
-
-function formatNumber(num) {
-  const abs = Math.abs(num);
-  if (abs !== 0 && (abs < 1e-6 || abs >= 1e15)) {
-    return num.toExponential(6);
-  }
-  return new Intl.NumberFormat("en-US", { maximumFractionDigits: 6 }).format(
-    num
-  );
-}
+import { formatNumber } from "@/features/converters/engine/formatNumber";
 
 export default function ConverterPanel({ category }) {
   const units = category.units;

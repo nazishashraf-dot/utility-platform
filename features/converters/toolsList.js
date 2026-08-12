@@ -31,6 +31,11 @@ export const converterTools = [
     description: "Convert between bytes, kilobytes, megabytes, gigabytes, and terabytes.",
     href: "/converters/digital-storage",
   },
+  {
+    name: "Currency",
+    description: "Convert between major world currencies using live exchange rates.",
+    href: "/converters/currency",
+  },
 ];
 
 export default converterTools;
