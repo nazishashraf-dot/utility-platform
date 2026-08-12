@@ -82,7 +82,7 @@ export default function ConverterPanel({ category }) {
         />
       </div>
 
-      <div className="mt-6 grid grid-cols-[1fr_auto_1fr] items-end gap-3">
+      <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-end">
         <div>
           <label className="block text-sm font-medium text-gray-700">
             From
@@ -104,7 +104,7 @@ export default function ConverterPanel({ category }) {
           type="button"
           onClick={handleSwap}
           aria-label="Swap units"
-          className="mb-1 flex h-11 w-11 items-center justify-center rounded-full border border-gray-300 text-lg text-gray-600 transition-colors hover:border-primary-300 hover:bg-primary-50 hover:text-primary-600"
+          className="mx-auto flex h-11 w-11 items-center justify-center rounded-full border border-gray-300 text-lg text-gray-600 transition-colors hover:border-primary-300 hover:bg-primary-50 hover:text-primary-600 sm:mx-0 sm:mb-1"
         >
           ↔
         </button>
@@ -130,12 +130,14 @@ export default function ConverterPanel({ category }) {
       <div className="mt-8 rounded-xl bg-primary-50 p-6 text-center">
         <p className="text-sm font-medium text-gray-500">Result</p>
         {formattedResult !== null ? (
-          <p className="mt-1 break-all text-4xl font-bold text-primary-600 sm:text-5xl">
-            {formattedResult}
-            <span className="ml-2 text-lg font-medium text-primary-600/70">
+          <div className="mt-1 flex flex-wrap items-baseline justify-center gap-x-2 gap-y-1">
+            <span className="break-all text-3xl font-bold text-primary-600 sm:text-5xl">
+              {formattedResult}
+            </span>
+            <span className="text-base font-medium text-primary-600/70 sm:text-lg">
               {toUnitName}
             </span>
-          </p>
+          </div>
         ) : (
           <p className="mt-1 text-base text-gray-400">{message}</p>
         )}

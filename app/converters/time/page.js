@@ -2,7 +2,9 @@ import ConverterPanel from "@/components/ConverterPanel";
 import { timeCategory } from "@/features/converters/data/time";
 
 export const metadata = {
-  title: "Time Converter - Utility Platform",
+  title: "Time Converter - seconds, minutes, hours, days | Utility Platform",
+  description:
+    "Instantly convert time between seconds, minutes, hours, days, and weeks.",
 };
 
 export default function TimeConverterPage() {
