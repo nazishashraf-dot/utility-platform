@@ -2,6 +2,11 @@
 // and homepage grid can't drift out of sync with each other.
 export const converterTools = [
   {
+    name: "Currency",
+    description: "Convert between major world currencies using live exchange rates.",
+    href: "/converters/currency",
+  },
+  {
     name: "Length",
     description: "Convert between kilometers, miles, meters, feet, and more.",
     href: "/converters/length",
@@ -30,11 +35,6 @@ export const converterTools = [
     name: "Digital Storage",
     description: "Convert between bytes, kilobytes, megabytes, gigabytes, and terabytes.",
     href: "/converters/digital-storage",
-  },
-  {
-    name: "Currency",
-    description: "Convert between major world currencies using live exchange rates.",
-    href: "/converters/currency",
   },
 ];
 
