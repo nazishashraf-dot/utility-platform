@@ -118,7 +118,7 @@ export default function ConverterPanel({ category }) {
         </div>
       </div>
 
-      <div className="mt-8 rounded-xl bg-primary-50 p-6 text-center">
+      <div className="mt-8 rounded-xl bg-gradient-to-br from-primary-50 via-primary-50 to-primary-100/60 p-6 text-center">
         <p className="text-sm font-medium text-gray-500">Result</p>
         {formattedResult !== null ? (
           <div className="mt-1 flex flex-wrap items-baseline justify-center gap-x-2 gap-y-1">

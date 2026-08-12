@@ -1,4 +1,5 @@
 import ConverterPanel from "@/components/ConverterPanel";
+import ConverterPageShell from "@/components/ConverterPageShell";
 import { timeCategory } from "@/features/converters/data/time";
 
 export const metadata = {
@@ -9,13 +10,8 @@ export const metadata = {
 
 export default function TimeConverterPage() {
   return (
-    <div className="mx-auto w-full max-w-xl px-6 py-12 sm:px-10">
-      <h1 className="text-2xl font-semibold text-gray-900 sm:text-3xl">
-        Time Converter
-      </h1>
-      <div className="mt-8">
-        <ConverterPanel category={timeCategory} />
-      </div>
-    </div>
+    <ConverterPageShell title="Time Converter">
+      <ConverterPanel category={timeCategory} />
+    </ConverterPageShell>
   );
 }

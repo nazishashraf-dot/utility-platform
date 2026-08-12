@@ -1,4 +1,5 @@
 import CurrencyConverterPanel from "@/components/CurrencyConverterPanel";
+import ConverterPageShell from "@/components/ConverterPageShell";
 
 export const metadata = {
   title: "Currency Converter - USD, EUR, GBP, and more | Utility Platform",
@@ -8,13 +9,8 @@ export const metadata = {
 
 export default function CurrencyConverterPage() {
   return (
-    <div className="mx-auto w-full max-w-xl px-6 py-12 sm:px-10">
-      <h1 className="text-2xl font-semibold text-gray-900 sm:text-3xl">
-        Currency Converter
-      </h1>
-      <div className="mt-8">
-        <CurrencyConverterPanel />
-      </div>
-    </div>
+    <ConverterPageShell title="Currency Converter">
+      <CurrencyConverterPanel />
+    </ConverterPageShell>
   );
 }
