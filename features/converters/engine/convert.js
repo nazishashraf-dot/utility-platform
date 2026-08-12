@@ -10,14 +10,49 @@ function roundToSignificantFigures(num, precision = 12) {
   return Math.round(num * factor) / factor;
 }
 
+// A unit is either factor-based (multiply/divide relative to the base unit)
+// or formula-based (arbitrary toBase/fromBase functions, e.g. temperature).
+function isFactorUnit(unit) {
+  return typeof unit.factor === "number";
+}
+
+function isFormulaUnit(unit) {
+  return typeof unit.toBase === "function" && typeof unit.fromBase === "function";
+}
+
+function assertValidUnit(unit) {
+  if (isFactorUnit(unit)) {
+    if (!(unit.factor > 0)) {
+      throw new Error(`convert: unit "${unit.id}" factor must be greater than zero`);
+    }
+    return;
+  }
+
+  if (!isFormulaUnit(unit)) {
+    throw new Error(
+      `convert: unit "${unit.id}" must define either a numeric "factor" or both "toBase" and "fromBase" functions`
+    );
+  }
+}
+
+function toBaseValue(unit, value) {
+  return isFactorUnit(unit) ? value * unit.factor : unit.toBase(value);
+}
+
+function fromBaseValue(unit, baseValue) {
+  return isFactorUnit(unit) ? baseValue / unit.factor : unit.fromBase(baseValue);
+}
+
 /**
  * Converts a value from one unit to another within the same category.
  *
  * @param {number} value - The numeric value to convert.
  * @param {string} fromUnitId - id of the unit `value` is currently in.
  * @param {string} toUnitId - id of the unit to convert to.
- * @param {Array<{id: string, name: string, factor: number}>} unitsArray -
- *   Units for the category, each with a factor relative to the category's base unit.
+ * @param {Array<{id: string, name: string, factor?: number, toBase?: (value: number) => number, fromBase?: (value: number) => number}>} unitsArray -
+ *   Units for the category. Each unit is either factor-based (a `factor` relative
+ *   to the category's base unit) or formula-based (`toBase`/`fromBase` functions,
+ *   for conversions that aren't a simple multiplication, e.g. temperature).
  * @returns {number} The converted value.
  */
 export function convert(value, fromUnitId, toUnitId, unitsArray) {
@@ -38,14 +73,14 @@ export function convert(value, fromUnitId, toUnitId, unitsArray) {
   if (!toUnit) {
     throw new Error(`convert: unknown unit id "${toUnitId}"`);
   }
-  if (!(fromUnit.factor > 0) || !(toUnit.factor > 0)) {
-    throw new Error("convert: unit factors must be greater than zero");
-  }
+
+  assertValidUnit(fromUnit);
+  assertValidUnit(toUnit);
 
   if (fromUnitId === toUnitId) return value;
 
-  const valueInBaseUnits = value * fromUnit.factor;
-  const result = valueInBaseUnits / toUnit.factor;
+  const baseValue = toBaseValue(fromUnit, value);
+  const result = fromBaseValue(toUnit, baseValue);
 
   return roundToSignificantFigures(result);
 }
