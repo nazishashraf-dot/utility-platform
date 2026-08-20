@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { converterTools } from "@/features/converters/toolsList";
+import { pakistanHubLink } from "@/features/pakistan/toolsList";
 
 function DesktopNavLink({ tool, isActive }) {
   return (
@@ -63,6 +64,10 @@ export default function Header() {
               isActive={pathname === tool.href}
             />
           ))}
+          <DesktopNavLink
+            tool={pakistanHubLink}
+            isActive={pathname?.startsWith(pakistanHubLink.href) ?? false}
+          />
         </nav>
 
         <button
@@ -126,6 +131,11 @@ export default function Header() {
                 onClick={() => setIsMenuOpen(false)}
               />
             ))}
+            <MobileNavLink
+              tool={pakistanHubLink}
+              isActive={pathname?.startsWith(pakistanHubLink.href) ?? false}
+              onClick={() => setIsMenuOpen(false)}
+            />
           </nav>
         </>
       )}

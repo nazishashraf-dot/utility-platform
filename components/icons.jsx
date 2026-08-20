@@ -82,3 +82,24 @@ export function HardDriveIcon({ className }) {
     </IconBase>
   );
 }
+
+export function GemIcon({ className }) {
+  return (
+    <IconBase className={className}>
+      <path d="M6 3h12l3 6-9 12L3 9Z" />
+      <path d="M3 9h18" />
+      <path d="M9 3 8.5 9l3.5 12 3.5-12L15 3" />
+    </IconBase>
+  );
+}
+
+export function LandmarkIcon({ className }) {
+  return (
+    <IconBase className={className}>
+      <path d="m3 8 9-5 9 5" />
+      <path d="M4 8h16v2H4z" />
+      <path d="M6 10v8M10 10v8M14 10v8M18 10v8" />
+      <path d="M3 21h18" />
+    </IconBase>
+  );
+}

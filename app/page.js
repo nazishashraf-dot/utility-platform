@@ -1,5 +1,6 @@
 import ToolCard from "@/components/ToolCard";
 import { converterTools } from "@/features/converters/toolsList";
+import { pakistanHubLink } from "@/features/pakistan/toolsList";
 
 export default function Home() {
   return (
@@ -48,6 +49,12 @@ export default function Home() {
               icon={tool.icon}
             />
           ))}
+          <ToolCard
+            name={pakistanHubLink.name}
+            description={pakistanHubLink.description}
+            href={pakistanHubLink.href}
+            icon={pakistanHubLink.icon}
+          />
         </div>
       </div>
     </div>
