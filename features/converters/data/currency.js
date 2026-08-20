@@ -2,9 +2,9 @@
 // rates change daily and are fetched live from /api/exchange-rates. `id` is
 // the ISO currency code, since that's exactly what the rates API keys on.
 //
-// Limited to currencies actually supported by our rate source (Frankfurter,
-// which mirrors ECB reference rates): notably PKR and AED are NOT covered
-// and are intentionally excluded rather than shown with rates that don't exist.
+// Limited to currencies actually supported by our rate source
+// (open.er-api.com) - every code listed here must exist in that API's
+// response or it'll silently fail to convert.
 export const currencyCategory = {
   id: "currency",
   name: "Currency",
@@ -13,6 +13,7 @@ export const currencyCategory = {
     { id: "EUR", name: "Euro" },
     { id: "GBP", name: "British Pound" },
     { id: "INR", name: "Indian Rupee" },
+    { id: "PKR", name: "Pakistani Rupee" },
     { id: "CNY", name: "Chinese Yuan" },
     { id: "JPY", name: "Japanese Yen" },
     { id: "AUD", name: "Australian Dollar" },

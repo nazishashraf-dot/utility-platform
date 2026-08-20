@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { convertCurrencyAmount } from "./convertCurrency";
 
-// Shaped like a real Frankfurter response: base EUR, rates relative to it.
+// Shaped like a real exchange-rate API response: base EUR, rates relative to it.
 const base = "EUR";
 const rates = { USD: 1.1, GBP: 0.85 };
 
@@ -46,7 +46,7 @@ describe("convertCurrencyAmount", () => {
 
   it("throws when a currency has no rate in the table", () => {
     expect(() =>
-      convertCurrencyAmount(1, "USD", "PKR", rates, base)
+      convertCurrencyAmount(1, "USD", "AED", rates, base)
     ).toThrow();
   });
 });
