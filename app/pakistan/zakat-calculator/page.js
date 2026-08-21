@@ -13,6 +13,12 @@ export default function ZakatCalculatorPage() {
         <h1 className="text-2xl font-semibold text-gray-900 sm:text-3xl">
           Zakat Calculator
         </h1>
+        <p className="mt-3 text-sm text-gray-500">
+          Zakat is one of the Five Pillars of Islam - an obligatory act of
+          worship for every eligible Muslim, due at 2.5% of qualifying
+          wealth that has been held for one full lunar year (hawl) once it
+          exceeds the Nisab threshold.
+        </p>
         <div className="mt-8">
           <ZakatCalculatorForm />
         </div>

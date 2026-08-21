@@ -108,6 +108,31 @@ describe("calculateZakat - asset aggregation and debts", () => {
     );
   });
 
+  it("echoes every input back on the result so a breakdown can be rendered without recomputing", () => {
+    const result = calculateZakat({
+      cash: 10_000,
+      bankBalances: 20_000,
+      goldGrams: 5,
+      silverGrams: 15,
+      businessInventory: 30_000,
+      otherInvestments: 40_000,
+      debts: 5_000,
+      nisabStandard: "gold",
+      goldPricePerGram: GOLD_PRICE,
+      silverPricePerGram: SILVER_PRICE,
+    });
+
+    expect(result.cash).toBe(10_000);
+    expect(result.bankBalances).toBe(20_000);
+    expect(result.goldGrams).toBe(5);
+    expect(result.goldPricePerGram).toBe(GOLD_PRICE);
+    expect(result.silverGrams).toBe(15);
+    expect(result.silverPricePerGram).toBe(SILVER_PRICE);
+    expect(result.businessInventory).toBe(30_000);
+    expect(result.otherInvestments).toBe(40_000);
+    expect(result.debts).toBe(5_000);
+  });
+
   it("subtracts debts from total assets before comparing to Nisab", () => {
     const result = calculateZakat({
       cash: 2_500_000,

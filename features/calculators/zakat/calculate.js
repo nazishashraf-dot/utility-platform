@@ -45,8 +45,20 @@ export function calculateZakat({
   const zakatAmount = isZakatDue ? netZakatableWealth * ZAKAT_RATE : 0;
 
   return {
+    // Echoed back alongside the computed values so the UI can render a full
+    // breakdown (what was entered -> what it converted to -> the total)
+    // without recomputing or duplicating this logic.
+    cash,
+    bankBalances,
+    goldGrams,
+    goldPricePerGram,
     goldValue,
+    silverGrams,
+    silverPricePerGram,
     silverValue,
+    businessInventory,
+    otherInvestments,
+    debts,
     totalZakatableAssets,
     netZakatableWealth,
     nisabStandard: nisabStandard === "silver" ? "silver" : "gold",

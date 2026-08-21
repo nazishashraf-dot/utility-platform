@@ -9,6 +9,27 @@ function formatPkr(amount) {
   }).format(amount);
 }
 
+function formatGrams(grams) {
+  return new Intl.NumberFormat("en-PK", {
+    maximumFractionDigits: 2,
+  }).format(grams);
+}
+
+function BreakdownRow({ label, value, emphasize }) {
+  return (
+    <div
+      className={`flex items-baseline justify-between gap-4 py-1.5 ${
+        emphasize ? "font-semibold text-gray-900" : "text-gray-600"
+      }`}
+    >
+      <span className="text-sm">{label}</span>
+      <span className="whitespace-nowrap text-sm">
+        {formatPkr(value)} PKR
+      </span>
+    </div>
+  );
+}
+
 function parseAmount(value) {
   const parsed = Number(value.trim());
   return Number.isFinite(parsed) ? parsed : 0;
@@ -129,8 +150,11 @@ export default function ZakatCalculatorForm() {
             Nisab standard
           </legend>
           <p className="mt-1 text-xs text-gray-400">
-            Gold Nisab (87.48g) is the higher, more cautious threshold;
-            silver Nisab (612.36g) is lower, so more people meet it.
+            Gold Nisab (87.48g of gold) is the higher, more cautious
+            threshold; silver Nisab (612.36g of silver) is lower, so more
+            people meet it. Many scholars consider silver Nisab more
+            precautionary for Zakat, since it results in more wealth being
+            purified.
           </p>
           <div className="mt-3 flex gap-4">
             {["gold", "silver"].map((standard) => (
@@ -178,47 +202,102 @@ export default function ZakatCalculatorForm() {
       </form>
 
       {result && (
-        <div className="mt-8 rounded-xl bg-gradient-to-br from-primary-50 via-primary-50 to-primary-100/60 p-6 text-center">
-          <p className="text-sm font-medium text-gray-500">
-            Nisab threshold ({result.nisabStandard === "silver" ? "silver" : "gold"}
-            , {result.nisabThresholdGrams}g)
-          </p>
-          <p className="mt-1 text-lg font-semibold text-gray-700">
-            {formatPkr(result.nisabThresholdPkr)} PKR
-          </p>
-
-          <div className="mt-6">
-            {result.isZakatDue ? (
-              <>
-                <p className="text-sm font-medium text-gray-500">
-                  Zakat is due
-                </p>
-                <div className="mt-1 flex flex-wrap items-baseline justify-center gap-x-2 gap-y-1">
-                  <span className="break-all text-3xl font-bold text-primary-600 sm:text-5xl">
-                    {formatPkr(result.zakatAmount)}
-                  </span>
-                  <span className="text-base font-medium text-primary-600/70 sm:text-lg">
-                    PKR
-                  </span>
-                </div>
-              </>
-            ) : (
-              <p className="text-lg font-semibold text-gray-700">
-                Zakat is not due - net zakatable wealth is below Nisab.
-              </p>
-            )}
+        <>
+          <div className="mt-8 rounded-2xl border border-gray-100 bg-white p-6 shadow-lg shadow-gray-200/50">
+            <h2 className="text-sm font-semibold text-gray-700">
+              Breakdown
+            </h2>
+            <div className="mt-3 divide-y divide-gray-50">
+              <BreakdownRow label="Cash in hand" value={result.cash} />
+              <BreakdownRow label="Bank balances" value={result.bankBalances} />
+              <BreakdownRow
+                label={`Gold (${formatGrams(result.goldGrams)}g × ${formatPkr(
+                  result.goldPricePerGram
+                )} PKR/g)`}
+                value={result.goldValue}
+              />
+              <BreakdownRow
+                label={`Silver (${formatGrams(
+                  result.silverGrams
+                )}g × ${formatPkr(result.silverPricePerGram)} PKR/g)`}
+                value={result.silverValue}
+              />
+              <BreakdownRow
+                label="Business inventory"
+                value={result.businessInventory}
+              />
+              <BreakdownRow
+                label="Other investments"
+                value={result.otherInvestments}
+              />
+            </div>
+            <div className="mt-1 border-t border-gray-200 pt-2">
+              <BreakdownRow
+                label="Total zakatable assets"
+                value={result.totalZakatableAssets}
+                emphasize
+              />
+              <BreakdownRow
+                label="Less: debts / liabilities"
+                value={-result.debts}
+              />
+            </div>
+            <div className="mt-1 border-t border-gray-200 pt-2">
+              <BreakdownRow
+                label="Net zakatable wealth"
+                value={result.netZakatableWealth}
+                emphasize
+              />
+            </div>
           </div>
 
-          <p className="mt-4 text-xs text-gray-400">
-            Net zakatable wealth: {formatPkr(result.netZakatableWealth)} PKR
-          </p>
-        </div>
+          <div className="mt-4 rounded-xl bg-gradient-to-br from-primary-50 via-primary-50 to-primary-100/60 p-6 text-center">
+            <p className="text-sm font-medium text-gray-500">
+              Nisab threshold (
+              {result.nisabStandard === "silver" ? "silver" : "gold"},{" "}
+              {result.nisabThresholdGrams}g)
+            </p>
+            <p className="mt-1 text-lg font-semibold text-gray-700">
+              {formatPkr(result.nisabThresholdPkr)} PKR
+            </p>
+
+            <div className="mt-6">
+              {result.isZakatDue ? (
+                <>
+                  <p className="text-sm font-medium text-gray-500">
+                    Zakat is due
+                  </p>
+                  <div className="mt-1 flex flex-wrap items-baseline justify-center gap-x-2 gap-y-1">
+                    <span className="break-all text-3xl font-bold text-primary-600 sm:text-5xl">
+                      {formatPkr(result.zakatAmount)}
+                    </span>
+                    <span className="text-base font-medium text-primary-600/70 sm:text-lg">
+                      PKR
+                    </span>
+                  </div>
+                  <p className="mt-2 text-xs text-gray-400">
+                    2.5% of net zakatable wealth
+                  </p>
+                </>
+              ) : (
+                <p className="text-lg font-semibold text-gray-700">
+                  Zakat is not due - net zakatable wealth is below Nisab.
+                </p>
+              )}
+            </div>
+          </div>
+        </>
       )}
 
       <p className="mt-6 text-center text-xs text-gray-400">
-        This is a general estimate to help with calculation, not a religious
-        ruling. If your assets are complex or you have specific questions,
-        please consult a knowledgeable scholar.
+        Zakat is one of the Five Pillars of Islam: an obligatory act of
+        worship for eligible Muslims, due at 2.5% of qualifying wealth held
+        for one full lunar year (hawl) once it exceeds the Nisab threshold.
+        This calculator gives a general estimate to help with that
+        calculation - it is not a religious ruling. If your assets are
+        complex (business partnerships, loans given or received, mixed
+        ownership, etc.) or you have specific questions, please consult a
+        knowledgeable scholar.
       </p>
     </div>
   );
