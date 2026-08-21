@@ -83,6 +83,16 @@ export function HardDriveIcon({ className }) {
   );
 }
 
+export function LayersIcon({ className }) {
+  return (
+    <IconBase className={className}>
+      <path d="m12 2 9 5-9 5-9-5 9-5Z" />
+      <path d="m3 12 9 5 9-5" />
+      <path d="m3 17 9 5 9-5" />
+    </IconBase>
+  );
+}
+
 export function GemIcon({ className }) {
   return (
     <IconBase className={className}>

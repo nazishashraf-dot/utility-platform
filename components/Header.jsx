@@ -3,20 +3,19 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { converterTools } from "@/features/converters/toolsList";
-import { pakistanHubLink } from "@/features/pakistan/toolsList";
+import { categories } from "@/features/categories";
 
-function DesktopNavLink({ tool, isActive }) {
+function DesktopNavLink({ category, isActive }) {
   return (
     <Link
-      href={tool.href}
+      href={category.href}
       className={`group relative py-1 text-sm transition-colors ${
         isActive
           ? "font-semibold text-primary-600"
           : "font-medium text-gray-600 hover:text-primary-600"
       }`}
     >
-      {tool.name}
+      {category.name}
       <span
         className={`absolute inset-x-0 -bottom-0.5 h-0.5 origin-left scale-x-0 bg-primary-500 transition-transform duration-200 ${
           isActive ? "scale-x-100" : "group-hover:scale-x-100"
@@ -26,10 +25,10 @@ function DesktopNavLink({ tool, isActive }) {
   );
 }
 
-function MobileNavLink({ tool, isActive, onClick }) {
+function MobileNavLink({ category, isActive, onClick }) {
   return (
     <Link
-      href={tool.href}
+      href={category.href}
       onClick={onClick}
       className={`rounded-lg px-3 py-2 text-sm transition-colors ${
         isActive
@@ -37,7 +36,7 @@ function MobileNavLink({ tool, isActive, onClick }) {
           : "font-medium text-gray-600 hover:bg-primary-50 hover:text-primary-600"
       }`}
     >
-      {tool.name}
+      {category.name}
     </Link>
   );
 }
@@ -57,17 +56,13 @@ export default function Header() {
         </Link>
 
         <nav className="hidden items-center gap-x-5 md:flex">
-          {converterTools.map((tool) => (
+          {categories.map((category) => (
             <DesktopNavLink
-              key={tool.href}
-              tool={tool}
-              isActive={pathname === tool.href}
+              key={category.href}
+              category={category}
+              isActive={pathname?.startsWith(category.href) ?? false}
             />
           ))}
-          <DesktopNavLink
-            tool={pakistanHubLink}
-            isActive={pathname?.startsWith(pakistanHubLink.href) ?? false}
-          />
         </nav>
 
         <button
@@ -123,19 +118,14 @@ export default function Header() {
             id="mobile-menu"
             className="absolute inset-x-0 top-full z-40 flex flex-col gap-1 border-t border-gray-100 bg-white px-6 pb-4 pt-2 shadow-lg sm:px-10 md:hidden"
           >
-            {converterTools.map((tool) => (
+            {categories.map((category) => (
               <MobileNavLink
-                key={tool.href}
-                tool={tool}
-                isActive={pathname === tool.href}
+                key={category.href}
+                category={category}
+                isActive={pathname?.startsWith(category.href) ?? false}
                 onClick={() => setIsMenuOpen(false)}
               />
             ))}
-            <MobileNavLink
-              tool={pakistanHubLink}
-              isActive={pathname?.startsWith(pakistanHubLink.href) ?? false}
-              onClick={() => setIsMenuOpen(false)}
-            />
           </nav>
         </>
       )}

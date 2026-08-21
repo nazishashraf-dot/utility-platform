@@ -1,6 +1,5 @@
 import ToolCard from "@/components/ToolCard";
-import { converterTools } from "@/features/converters/toolsList";
-import { pakistanHubLink } from "@/features/pakistan/toolsList";
+import { categories } from "@/features/categories";
 
 export default function Home() {
   return (
@@ -40,21 +39,15 @@ export default function Home() {
 
       <div className="mx-auto w-full max-w-5xl px-6 pb-16 sm:px-10">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {converterTools.map((tool) => (
+          {categories.map((category) => (
             <ToolCard
-              key={tool.href}
-              name={tool.name}
-              description={tool.description}
-              href={tool.href}
-              icon={tool.icon}
+              key={category.href}
+              name={category.name}
+              description={category.description}
+              href={category.href}
+              icon={category.icon}
             />
           ))}
-          <ToolCard
-            name={pakistanHubLink.name}
-            description={pakistanHubLink.description}
-            href={pakistanHubLink.href}
-            icon={pakistanHubLink.icon}
-          />
         </div>
       </div>
     </div>

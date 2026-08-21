@@ -2,8 +2,7 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import Header from "./Header";
-import { converterTools } from "@/features/converters/toolsList";
-import { pakistanHubLink } from "@/features/pakistan/toolsList";
+import { categories } from "@/features/categories";
 
 afterEach(() => cleanup());
 
@@ -38,33 +37,19 @@ describe("Header mobile menu", () => {
     expect(header.className).toMatch(/\brelative\b/);
   });
 
-  it("renders a working link to every converter tool inside the mobile menu", () => {
+  it("renders a working link to every top-level category inside the mobile menu, and nothing else", () => {
     render(<Header />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
 
     const mobileMenu = document.getElementById("mobile-menu");
     const links = [...mobileMenu.querySelectorAll("a")];
 
-    expect(links).toHaveLength(converterTools.length + 1);
-    converterTools.forEach((tool) => {
-      const link = links.find((a) => a.getAttribute("href") === tool.href);
+    expect(links).toHaveLength(categories.length);
+    categories.forEach((category) => {
+      const link = links.find((a) => a.getAttribute("href") === category.href);
       expect(link).toBeTruthy();
-      expect(link.textContent).toBe(tool.name);
+      expect(link.textContent).toBe(category.name);
     });
-  });
-
-  it("renders a single Pakistan Tools link pointing at the hub, not individual Pakistan tools", () => {
-    render(<Header />);
-    fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
-
-    const mobileMenu = document.getElementById("mobile-menu");
-    const links = [...mobileMenu.querySelectorAll("a")];
-    const pakistanLinks = links.filter(
-      (a) => a.getAttribute("href") === pakistanHubLink.href
-    );
-
-    expect(pakistanLinks).toHaveLength(1);
-    expect(pakistanLinks[0].textContent).toBe(pakistanHubLink.name);
   });
 
   it("closes the mobile menu when the button is clicked again", () => {
