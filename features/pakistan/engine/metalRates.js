@@ -16,8 +16,9 @@ export function usdPerOunceToPkrPerTola(usdPerOunce, usdToPkrRate) {
   return usdPerTola * usdToPkrRate;
 }
 
-// Computes the three PKR/tola prices the gold-silver-rates page displays,
-// from raw USD/troy-oz spot prices plus the USD->PKR rate.
+// Computes the PKR/tola and PKR/gram prices the gold-silver-rates page and
+// the Zakat calculator (Nisab is priced per gram) both need, from raw
+// USD/troy-oz spot prices plus the USD->PKR rate.
 export function calculateGoldSilverRatesPkr({
   goldUsdPerOunce,
   silverUsdPerOunce,
@@ -27,7 +28,13 @@ export function calculateGoldSilverRatesPkr({
   const gold22kPerTola = gold24kPerTola * GOLD_22K_PURITY;
   const silverPerTola = usdPerOunceToPkrPerTola(silverUsdPerOunce, usdToPkrRate);
 
-  return { gold24kPerTola, gold22kPerTola, silverPerTola };
+  return {
+    gold24kPerTola,
+    gold22kPerTola,
+    silverPerTola,
+    gold24kPerGram: gold24kPerTola / TOLA_IN_GRAMS,
+    silverPerGram: silverPerTola / TOLA_IN_GRAMS,
+  };
 }
 
 export default calculateGoldSilverRatesPkr;

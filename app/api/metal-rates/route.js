@@ -34,18 +34,25 @@ export async function GET() {
       );
     }
 
-    const { gold24kPerTola, gold22kPerTola, silverPerTola } =
-      calculateGoldSilverRatesPkr({
-        goldUsdPerOunce,
-        silverUsdPerOunce,
-        usdToPkrRate,
-      });
+    const {
+      gold24kPerTola,
+      gold22kPerTola,
+      silverPerTola,
+      gold24kPerGram,
+      silverPerGram,
+    } = calculateGoldSilverRatesPkr({
+      goldUsdPerOunce,
+      silverUsdPerOunce,
+      usdToPkrRate,
+    });
 
     return Response.json(
       {
         gold24kPerTola,
         gold22kPerTola,
         silverPerTola,
+        gold24kPerGram,
+        silverPerGram,
         usdToPkrRate,
         date: exchangeRates.date,
         updatedAt: spot.updated_at ?? null,

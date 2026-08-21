@@ -38,6 +38,8 @@ describe("calculateGoldSilverRatesPkr", () => {
     expect(result.gold24kPerTola).toBeCloseTo(1166.38, 6);
     expect(result.gold22kPerTola).toBeCloseTo(1166.38 * GOLD_22K_PURITY, 6);
     expect(result.silverPerTola).toBeCloseTo(583.19, 6);
+    expect(result.gold24kPerGram).toBeCloseTo(100, 6);
+    expect(result.silverPerGram).toBeCloseTo(50, 6);
   });
 
   it("prices 22K gold below 24K gold, scaled by the purity factor exactly", () => {
