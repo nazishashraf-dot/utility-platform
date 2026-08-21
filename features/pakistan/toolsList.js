@@ -1,4 +1,9 @@
-import { CalculatorIcon, GemIcon, LandmarkIcon } from "@/components/icons";
+import {
+  CalculatorIcon,
+  GemIcon,
+  LandmarkIcon,
+  PercentIcon,
+} from "@/components/icons";
 
 // Single source of truth for the Pakistan Tools hub, so the hub page, the
 // homepage card, and the header nav link can't drift out of sync. New
@@ -16,6 +21,12 @@ export const pakistanTools = [
     description: "Estimate your Zakat from cash, gold, silver, and other assets.",
     href: "/pakistan/zakat-calculator",
     icon: CalculatorIcon,
+  },
+  {
+    name: "Loan Calculator",
+    description: "Compare reducing-balance and flat-rate installment plans.",
+    href: "/pakistan/loan-calculator",
+    icon: PercentIcon,
   },
 ];
 
